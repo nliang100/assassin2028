@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Assassin Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1 {
+            color: #343a40;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .alert {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome to Class Assassin</h1>
+        <p class="text-center">Upload your player dataset, manage kills, and send target emails easily!</p>
+
+        <!-- Display the current dataset -->
+        {% if uploaded_file %}
+        <div class="alert alert-info text-center" role="alert">
+            <strong>Current Dataset:</strong> {{ uploaded_file }}
+            <br>
+            <em>This is the most recent dataset in use.</em>
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            <em>No dataset has been uploaded yet. Please upload a CSV to get started.</em>
+        </div>
+        {% endif %}
+
+        <!-- Form to upload a dataset -->
+        <form action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload Player Dataset (CSV):</label>
+                <input type="file" id="file" name="file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Upload</button>
+        </form>
+        <hr>
+
+        <!-- Form to submit a kill -->
+        <form action="/kill" method="post" class="mb-4">
+            <div class="mb-3">
+                <label for="killer" class="form-label">Enter Killer's Name:</label>
+                <input type="text" id="killer" name="killer" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">Submit Kill</button>
+        </form>
+        <hr>
+
+        <hr>
+        <form action="/send_initial_emails" method="post" class="mb-4">
+            <div class="text-center">
+                <button type="submit" class="btn btn-success w-100">Send First Wave of Emails</button>
+            </div>
+        </form>
+
+
+        <!-- Link to view player data -->
+        <div class="text-center">
+            <a href="/data" class="btn btn-secondary">View Current Player Data</a>
+        </div>
+    </div>
+</body>
+</html>
